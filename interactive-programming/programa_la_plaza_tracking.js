@@ -2,11 +2,15 @@
 var currentColor;
 var blackBackground = false;
 
+var rColor = 0;
+var gColor = 0;
+var bColor = 0;
+
 function setup () {
   // el tamaño es de 192x157 y se ajusta automaticamente
   createCanvas(windowWidth, windowHeight);
   frameRate(55);
-  //colorMode(HSB, 50, 50, 50);
+  colorMode(HSB, 50, 50, 50);
   rectMode(CENTER);
   api.tracking.connect();
   changeGama();
@@ -18,27 +22,24 @@ function changeGama(){
     var value_pallete = Math.floor((Math.random() * 5) + 1);
     console.log(value_pallete);
     if(value_pallete == 0){
-      var value_color_yellow = color(255, Math.floor((Math.random() * 204) + 104), 147);
-      currentColor = value_color_yellow;
+      rColor = 255;
+      bColor = 147;
     } else if(value_pallete == 1){
-      var value_color_orange =  color(204, Math.floor((Math.random() * 204) + 104), 0);
-      currentColor = value_color_orange;
+      rColor = 204;
+      bColor = 0;
     } else if(value_pallete == 2){
-      var value_color_blue = color(4,Math.floor((Math.random() * 204) + 104), 168);
-      currentColor = value_color_blue;
+      rColor = 4;
+      bColor = 168;
     } else if(value_pallete == 3){
-      var value_color_green = color(153,Math.floor((Math.random() * 204) + 104), 77);
-      currentColor = value_color_green;
+      rColor = 153;
+      bColor = 77;
     } else if(value_pallete == 4){
-      var value_color_gray = color(126,Math.floor((Math.random() * 204) + 104), 135);
-      currentColor = value_color_gray;
-    } else if(value_pallete == 5){
-      
-    } 
-    
-    
+      rColor = 126;
+      bColor = 135;
+    }
+    console.log("El color actual es ", value_pallete);
     changeGama();
-  }, 1000);
+  }, 5000);
 }
 
 function draw() {
@@ -56,7 +57,8 @@ function draw() {
     if(!blobs[i].painted){
       rect(blobs[i].x,  blobs[i].y, 16, 30);
       //fill(204,value_color, 0);
-      fill(currentColor);
+      var nextColor = color(rColor, Math.floor((Math.random() * 204) + 104), bColor);
+      fill(nextColor);
       blobs[i].painted = true;
     }
   }
